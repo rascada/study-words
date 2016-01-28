@@ -6,7 +6,8 @@
 #screen
   #question
     ul
-      li(v-for='word in words') {{ word}}
+      li(v-for='word in words' v-bind:style="{ 'color': word.color }")
+        span {{ word.answers.length ? word.answers : word.word }}
   input(v-model='answer' @keydown.enter='try')
 
 </template>
@@ -31,7 +32,6 @@ export default {
     this.active = this.randomWord();
     [this.round, this.correctAnsw] = [0, 0];
 
-    words.map((elem) => elem[4] = 0);
     this.next();
   },
 
@@ -50,37 +50,29 @@ export default {
     },
 
     next() {
-      let li = document.createElement('li');
       let old = this.active;
 
-      while (words[this.active][4] > 5 || this.active == old)
+      while (this.active == old)
         this.active = this.randomWord();
 
-      this.words.push(words[this.active][0]);
+      this.words.unshift({ word: words[this.active][0], answers: [], color: null });
     },
 
     show(correct) {
       this.answer = '';
-      let li = document.createElement('li');
-      let color;
-
       this.round++;
+
+      let color;
       if (correct) {
         this.correctAnsw++;
-        words[this.active][4]++;
         color = '#2da';
-      } else {
-        words[this.active][4] = 0;
+      } else
         color = '#c22';
-      }
 
-      let str = '';
-      for (let i = 0; i++ < words[this.active].length - 1;)
-      str += `${words[this.active][i - 1]} - `;
-      word.firstChild.style.background = color;
-      word.firstChild.innerHTML = str;
-      document.getElementById('score').innerHTML = `${this.correctAnsw}/${this.round}`;
-      document.getElementById('percent').innerHTML = `${Math.round(this.correctAnsw * 100 / this.round)}%`;
+      this.words[0].answers = words[this.active];
+      this.words[0].color = color;
+
+      this.percent = `${ Math.round(this.correctAnsw * 100 / this.round) }%`;
       this.next();
     },
   },
