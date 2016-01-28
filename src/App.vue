@@ -63,7 +63,7 @@ export default {
     answer.onkeydown = (key) => {
       if (key.which == 13) {
         console.log(answer.value);
-        answer.value.toLowerCase() == words[active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o') ? show(true) : show(false);
+        answer.value.trim().toLowerCase() == words[active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o') ? show(true) : show(false);
       }
     };
   },
