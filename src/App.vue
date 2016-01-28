@@ -15,57 +15,59 @@ import words from './words/second';
 
 export default {
   ready() {
-    let answer =  document.getElementById('answer');
-    let word = document.getElementById('word');
-    let active = Math.floor(Math.random() * words.length);
-    let [round, correctAnsw] = [0, 0];
+    this.answer =  document.getElementById('answer');
+    this.word = document.getElementById('word');
+    this.active = Math.floor(Math.random() * words.length);
+    [this.round, this.correctAnsw] = [0, 0];
 
     words.map((elem) => elem[4] = 0);
-
-    function next() {
-      let li = document.createElement('li');
-      let old = active;
-
-      while (words[active][4] > 5 || active == old) {
-        console.log(words[active][4]);active = Math.floor(Math.random() * words.length);
+    this.next();
+    answer.onkeydown = (key) => {
+      if (key.which == 13) {
+        console.log(answer.value);
+        this.show(answer.value.trim().toLowerCase() == words[this.active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o'));
       }
+    };
+  },
 
-      li.innerHTML = words[active][0];
-      word.insertBefore(li, word.firstChild);
-    }
-
-    function show(correct) {
+  methods: {
+    show(correct) {
       answer.value = '';
       let li = document.createElement('li');
       let color;
 
-      round++;
+      this.round++;
       if (correct) {
-        correctAnsw++;
-        words[active][4]++;
+        this.correctAnsw++;
+        words[this.active][4]++;
         color = '#2da';
       } else {
-        words[active][4] = 0;
+        words[this.active][4] = 0;
         color = '#c22';
       }
 
       let str = '';
-      for (let i = 0; i++ < words[active].length - 1;)
-      str += `${words[active][i - 1]} - `;
+      for (let i = 0; i++ < words[this.active].length - 1;)
+      str += `${words[this.active][i - 1]} - `;
       word.firstChild.style.background = color;
       word.firstChild.innerHTML = str;
-      document.getElementById('score').innerHTML = `${correctAnsw}/${round}`;
-      document.getElementById('percent').innerHTML = `${Math.round(correctAnsw * 100 / round)}%`;
-      next();
-    }
+      document.getElementById('score').innerHTML = `${this.correctAnsw}/${this.round}`;
+      document.getElementById('percent').innerHTML = `${Math.round(this.correctAnsw * 100 / this.round)}%`;
+      this.next();
+    },
 
-    next();
-    answer.onkeydown = (key) => {
-      if (key.which == 13) {
-        console.log(answer.value);
-        answer.value.trim().toLowerCase() == words[active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o') ? show(true) : show(false);
+    next() {
+      let li = document.createElement('li');
+      let old = this.active;
+
+      while (words[this.active][4] > 5 || this.active == old) {
+        console.log(words[this.active][4]);
+        this.active = Math.floor(Math.random() * words.length);
       }
-    };
+
+      li.innerHTML = words[this.active][0];
+      word.insertBefore(li, word.firstChild);
+    },
   },
 };
 
