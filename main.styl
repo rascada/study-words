@@ -1,0 +1,51 @@
+@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext');
+*
+	box-sizing border-box
+body
+	font-family Kelly Slab
+	background #fafafa
+	margin 0
+	height 100vh
+	display flex
+	flex-flow column
+	align-items center
+	justify-content center
+	#screen
+		background #fff
+		width 30em
+		height 20em
+		display flex
+		flex-flow column
+		box-shadow 0 .2em 0.1em rgba(0,0,0,.25)
+		#question
+			padding .75em 2em
+			height 85%
+			#word
+				list-style-type none
+				padding 0
+				height 95%
+				overflow-y scroll
+				padding .5em 0
+				& li
+					padding .5em .25em
+					&:first-child
+						text-align center
+						font-size 1.2em
+		input
+			border 0
+			height 15%
+			background #2da
+			padding .2em .1em
+			text-align center
+			color #efefef
+			font-size 1.2em
+			&:focus
+				outline none
+.billboard
+	position absolute
+	top 0
+	padding 1em
+	font-size 2em
+	color #444
+#percent
+	right 0

@@ -1,0 +1,19 @@
+{
+  "name": "study-words",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.jade",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rascada/study-words.git"
+  },
+  "author": "Damian Martyniak",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/rascada/study-words/issues"
+  },
+  "homepage": "https://github.com/rascada/study-words#readme"
+}
