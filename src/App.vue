@@ -4,7 +4,8 @@
 #percent.billboard 0%
 #screen
   #question
-    ul#word
+    ul
+      li(v-for='word in words') {{ word}}
   input(v-model='answer' @keydown.enter='try')
 
 </template>
@@ -17,11 +18,12 @@ export default {
   data() {
     return {
       answer: '',
+      words: [],
     };
   },
 
   ready() {
-    this.active = Math.floor(Math.random() * words.length);
+    this.active = this.randomWord();
     [this.round, this.correctAnsw] = [0, 0];
 
     words.map((elem) => elem[4] = 0);
@@ -32,6 +34,20 @@ export default {
     try() {
       console.log(this.answer);
       this.show(this.answer.trim().toLowerCase() == words[this.active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o'));
+    },
+
+    randomWord() {
+      return Math.floor(Math.random() * words.length);
+    },
+
+    next() {
+      let li = document.createElement('li');
+      let old = this.active;
+
+      while (words[this.active][4] > 5 || this.active == old)
+        this.active = this.randomWord();
+
+      this.words.push(words[this.active][0]);
     },
 
     show(correct) {
@@ -57,19 +73,6 @@ export default {
       document.getElementById('score').innerHTML = `${this.correctAnsw}/${this.round}`;
       document.getElementById('percent').innerHTML = `${Math.round(this.correctAnsw * 100 / this.round)}%`;
       this.next();
-    },
-
-    next() {
-      let li = document.createElement('li');
-      let old = this.active;
-
-      while (words[this.active][4] > 5 || this.active == old) {
-        console.log(words[this.active][4]);
-        this.active = Math.floor(Math.random() * words.length);
-      }
-
-      li.innerHTML = words[this.active][0];
-      word.insertBefore(li, word.firstChild);
     },
   },
 };
@@ -100,7 +103,7 @@ body
 		#question
 			padding .75em 2em
 			height 85%
-			#word
+			ul
 				list-style-type none
 				padding 0
 				height 95%
