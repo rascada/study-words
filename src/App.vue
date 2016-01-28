@@ -33,11 +33,15 @@ export default {
   methods: {
     try() {
       console.log(this.answer);
-      this.show(this.answer.trim().toLowerCase() == words[this.active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o'));
+      this.show(this.answer.trim().toLowerCase() == this.escape(words[this.active][1]));
     },
 
     randomWord() {
       return Math.floor(Math.random() * words.length);
+    },
+
+    escape(word) {
+      return word.replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o');
     },
 
     next() {
