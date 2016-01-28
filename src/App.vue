@@ -1,7 +1,8 @@
 <template lang='jade'>
 
-#score.billboard 0/0
-#percent.billboard 0%
+#score.billboard {{ correctAnsw }}/{{ round }}
+#percent.billboard {{ percent }}
+
 #screen
   #question
     ul
@@ -17,8 +18,12 @@ import words from './words/second';
 export default {
   data() {
     return {
-      answer: '',
+      round: 0,
       words: [],
+      percent: 0,
+      answer: '',
+      active: null,
+      correctAnsw: 0,
     };
   },
 
@@ -88,6 +93,7 @@ export default {
 @import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext');
 *
 	box-sizing border-box
+
 body
 	font-family Kelly Slab
 	background #fafafa
