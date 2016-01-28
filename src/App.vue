@@ -5,7 +5,7 @@
 #screen
   #question
     ul#word
-  input#answer
+  input(v-model='answer' @keydown.enter='try')
 
 </template>
 
@@ -14,25 +14,28 @@
 import words from './words/second';
 
 export default {
+  data() {
+    return {
+      answer: '',
+    };
+  },
+
   ready() {
-    this.answer =  document.getElementById('answer');
-    this.word = document.getElementById('word');
     this.active = Math.floor(Math.random() * words.length);
     [this.round, this.correctAnsw] = [0, 0];
 
     words.map((elem) => elem[4] = 0);
     this.next();
-    answer.onkeydown = (key) => {
-      if (key.which == 13) {
-        console.log(answer.value);
-        this.show(answer.value.trim().toLowerCase() == words[this.active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o'));
-      }
-    };
   },
 
   methods: {
+    try() {
+      console.log(this.answer);
+      this.show(this.answer.trim().toLowerCase() == words[this.active][1].replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o'));
+    },
+
     show(correct) {
-      answer.value = '';
+      this.answer = '';
       let li = document.createElement('li');
       let color;
 
