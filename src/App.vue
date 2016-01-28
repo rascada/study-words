@@ -15,16 +15,16 @@ import words from './words/second';
 
 export default {
   ready() {
-    var answer =  document.getElementById('answer'),
-    	word = document.getElementById('word'),
-    	active = Math.floor(Math.random() * words.length),
-    	[round, correctAnsw] = [0, 0];
+    let answer =  document.getElementById('answer');
+    let word = document.getElementById('word');
+    let active = Math.floor(Math.random() * words.length);
+    let [round, correctAnsw] = [0, 0];
 
     words.map((elem) => elem[4] = 0);
 
     function next() {
-      let li = document.createElement('li'),
-      old = active;
+      let li = document.createElement('li');
+      let old = active;
 
       while (words[active][4] > 5 || active == old) {
         console.log(words[active][4]);active = Math.floor(Math.random() * words.length);
@@ -36,15 +36,15 @@ export default {
 
     function show(correct) {
       answer.value = '';
-      let li = document.createElement('li'),
-      color;
+      let li = document.createElement('li');
+      let color;
 
       round++;
       if (correct) {
         correctAnsw++;
         words[active][4]++;
         color = '#2da';
-      }else {
+      } else {
         words[active][4] = 0;
         color = '#c22';
       }
