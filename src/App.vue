@@ -6,11 +6,17 @@
 #screen
   #question
     ul
-      li(v-for='word in words' v-bind:style="{ 'color': word.color }")
-        .answer(v-show='word.color')
-          span(v-for='answer in word.answers') {{ answer }}
-        span(v-else) {{ word.answers[0] }}
-  input(v-model='answer' @keydown.enter='try')
+      li(v-for='word in words')
+        .answer(v-show='word.user.length')
+          span {{ word.name }}
+          span(
+            v-for='answer in word.answers'
+            v-show='word.user.length > $index'
+            v-bind:style="{ color: escape(answer) == word.user[$index] ? '#2da' : '#c22' }"
+            )
+            {{ answer }}
+        span(v-else) {{ word.name }}
+  input(v-model='answer' @keydown.enter='handleAnswer')
 
 </template>
 
@@ -26,6 +32,7 @@ export default {
       percent: 0,
       answer: '',
       active: null,
+      state: 0,
       correctAnsw: 0,
     };
   },
@@ -53,29 +60,41 @@ export default {
 
     next() {
       let old = this.active;
+      let word = words[this.active].slice();
 
       while (this.active == old)
         this.active = this.randomWord();
 
       this.words.unshift({
-        answers: words[this.active],
-        color: null,
+        name: word.shift(),
+        answers: word,
+        user: [],
       });
+
+      this.state = 0;
     },
 
-    show(correct) {
+    handleAnswer() {
+      this.show();
+    },
+
+    show() {
+      let correct = this.answer.trim().toLowerCase();
+      let correctWord = this.words[0].answers[this.state];
+
+      correct = correct == this.escape(correctWord);
+
+      this.words[0].user.push(this.answer.trim().toLowerCase());
+
+      correct && this.correctAnsw++;
       this.answer = '';
       this.round++;
+      this.state++;
 
-      let color;
-      if (correct) {
-        this.correctAnsw++;
-        color = '#2da';
-      } else
-        color = '#c22';
-
-      this.words[0].color = color;
-      this.next();
+      if (this.state > 2) {
+        this.next();
+        return false;
+      }
     },
   },
 };
