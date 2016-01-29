@@ -138,15 +138,13 @@ body
 
 #screen
   background #fff
-  width 30em
+  width 50em
   display flex
   flex-flow column
-  box-shadow 0 .2em 0.1em rgba(0,0,0,.25)
+  box-shadow 0 .25em .3em rgba(0,0,0,.25)
 
 #question
   padding .75em 2em
-  height 85%
-
   ul
     list-style-type none
     padding 0
@@ -154,14 +152,16 @@ body
     max-height 55vh
     padding .5em 0
 
-  & li
-    padding .5em .25em
-    &:first-child
-      text-align center
-      font-size 1.2em
+    & li
+      padding .5em .25em
+      &:first-child
+        text-align center
+        font-weight 600
+        font-size 2em
+
 input
   border 0
-  height 15%
+  height 2.25em
   background #2da
   padding .2em .1em
   text-align center
