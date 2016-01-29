@@ -1,7 +1,7 @@
 <template lang='jade'>
 
 .billboard {{ correctAnsw }}/{{ round }}
-.right.billboard {{ percent }}
+.right.billboard {{ (correctAnsw * 100) / round }}%
 
 #screen
   #question
@@ -79,8 +79,6 @@ export default {
         color = '#c22';
 
       this.words[0].color = color;
-
-      this.percent = `${ Math.round(this.correctAnsw * 100 / this.round) }%`;
       this.next();
     },
   },
