@@ -1,6 +1,6 @@
 export default [
   ['piec, wypalać', 'backen', 'buk', 'hat gebacken'],
-  ['zaczynać', 'beginnen', 'buk', 'hat gebacken'],
+  ['zaczynać', 'beginnen', 'begann', 'hat begonnen'],
   ['uchronić, kryć', 'bergen', 'barg', 'hat geborgen'],
   ['oferować', 'bieten', 'bot', 'hat geboten'],
   ['wiązać, łączyć', 'binden', 'band', 'hat gebunden'],
