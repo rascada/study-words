@@ -1,7 +1,7 @@
 <template lang='jade'>
 
 .billboard {{ correctAnsw }}/{{ round }}
-.right.billboard {{ (correctAnsw * 100) / round }}%
+.right.billboard {{ (correctAnsw * 100) / round || 0 }}%
 
 #screen
   #question
@@ -32,22 +32,18 @@ export default {
 
   ready() {
     this.active = this.randomWord();
-    [this.round, this.correctAnsw] = [0, 0];
-
     this.next();
   },
 
   methods: {
-    try() {
-      console.log(this.answer);
-      this.show(this.answer.trim().toLowerCase() == this.escape(words[this.active][1]));
-    },
-
     randomWord() {
       return Math.floor(Math.random() * words.length);
     },
 
     escape(word) {
+      if (!word)
+        return 'bład';
+
       return word
         .replace('ü', 'u')
         .replace('ß', 's')
