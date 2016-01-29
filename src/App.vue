@@ -48,7 +48,11 @@ export default {
     },
 
     escape(word) {
-      return word.replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o');
+      return word
+        .replace('ü', 'u')
+        .replace('ß', 's')
+        .replace('ä', 'a')
+        .replace('ö', 'o');
     },
 
     next() {
@@ -57,7 +61,10 @@ export default {
       while (this.active == old)
         this.active = this.randomWord();
 
-      this.words.unshift({ word: words[this.active][0], answers: [], color: null });
+      this.words.unshift({
+        answers: words[this.active],
+        color: null,
+      });
     },
 
     show(correct) {
@@ -71,7 +78,6 @@ export default {
       } else
         color = '#c22';
 
-      this.words[0].answers = words[this.active];
       this.words[0].color = color;
 
       this.percent = `${ Math.round(this.correctAnsw * 100 / this.round) }%`;
