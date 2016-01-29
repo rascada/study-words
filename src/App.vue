@@ -145,7 +145,7 @@ body
 	padding 1em
 	font-size 2em
 	color #444
-#percent
+.right
 	right 0
 
 </style>
