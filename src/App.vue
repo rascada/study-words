@@ -1,7 +1,7 @@
 <template lang='jade'>
 
 .billboard {{ correctAnsw }}/{{ round }}
-.right.billboard {{ (correctAnsw * 100) / round || 0 }}%
+.right.billboard {{ (correctAnsw * 100) / round || 0 | round 2 }}%
 
 #screen
   #question
@@ -23,6 +23,7 @@
 <script>
 
 import words from './words/second';
+import round from 'vue-round-filter';
 
 export default {
   data() {
@@ -35,6 +36,10 @@ export default {
       state: 0,
       correctAnsw: 0,
     };
+  },
+
+  filters: {
+    round,
   },
 
   ready() {
