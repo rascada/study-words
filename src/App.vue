@@ -1,10 +1,10 @@
 <template lang='jade'>
 
-.billboard {{ correctAnsw }}/{{ round }}
-.right.billboard {{ (correctAnsw * 100) / round || 0 | round 2 }}%
-
 #screen
-  h1.appName Study words
+  h1.appName
+    span Study words
+    span {{ correctAnsw }}/{{ round }}
+    span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
   #question
     ul
       li(v-for='word in words')
@@ -119,6 +119,8 @@ export default {
   box-sizing border-box
 
 .appName
+  display flex
+  justify-content space-between
   background #2da
   padding .25em
   color #fff
@@ -167,14 +169,5 @@ input
   font-size 1.2em
   &:focus
     outline none
-.billboard
-  position absolute
-  top 0
-  padding 1em
-  font-size 2em
-  color #444
-
-.right
-  right 0
 
 </style>
