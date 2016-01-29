@@ -4,6 +4,7 @@
 .right.billboard {{ (correctAnsw * 100) / round || 0 | round 2 }}%
 
 #screen
+  h1.appName Study words
   #question
     ul
       li(v-for='word in words')
@@ -115,7 +116,13 @@ export default {
   @extend .flex, .around
 
 *
-	box-sizing border-box
+  box-sizing border-box
+
+.appName
+  background #2da
+  padding .25em
+  color #fff
+  margin 0
 
 body
   font-family Kelly Slab
