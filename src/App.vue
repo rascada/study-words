@@ -1,13 +1,15 @@
 <template lang='jade'>
 
-#score.billboard {{ correctAnsw }}/{{ round }}
-#percent.billboard {{ percent }}
+.billboard {{ correctAnsw }}/{{ round }}
+.right.billboard {{ percent }}
 
 #screen
   #question
     ul
       li(v-for='word in words' v-bind:style="{ 'color': word.color }")
-        span {{ word.answers.length ? word.answers : word.word }}
+        .answer(v-show='word.color')
+          span(v-for='answer in word.answers') {{ answer }}
+        span(v-else) {{ word.answers[0] }}
   input(v-model='answer' @keydown.enter='try')
 
 </template>
@@ -82,7 +84,12 @@ export default {
 
 <style lang='stylus'>
 
-@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext');
+@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext')
+@import "~flexstyl/index"
+
+.answer
+  @extend .flex, .around
+
 *
 	box-sizing border-box
 
