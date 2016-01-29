@@ -1,14 +1,22 @@
 <template lang='jade'>
 
-#score.billboard {{ correctAnsw }}/{{ round }}
-#percent.billboard {{ percent }}
+.billboard {{ correctAnsw }}/{{ round }}
+.right.billboard {{ (correctAnsw * 100) / round || 0 }}%
 
 #screen
   #question
     ul
-      li(v-for='word in words' v-bind:style="{ 'color': word.color }")
-        span {{ word.answers.length ? word.answers : word.word }}
-  input(v-model='answer' @keydown.enter='try')
+      li(v-for='word in words')
+        .answer(v-show='word.user.length')
+          span {{ word.name }}
+          span(
+            v-for='answer in word.answers'
+            v-show='word.user.length > $index'
+            v-bind:style="{ color: escape(answer) == word.user[$index] ? '#2da' : '#c22' }"
+            )
+            {{ answer }}
+        span(v-else) {{ word.name }}
+  input(v-model='answer' @keydown.enter='handleAnswer')
 
 </template>
 
@@ -24,56 +32,69 @@ export default {
       percent: 0,
       answer: '',
       active: null,
+      state: 0,
       correctAnsw: 0,
     };
   },
 
   ready() {
     this.active = this.randomWord();
-    [this.round, this.correctAnsw] = [0, 0];
-
     this.next();
   },
 
   methods: {
-    try() {
-      console.log(this.answer);
-      this.show(this.answer.trim().toLowerCase() == this.escape(words[this.active][1]));
-    },
-
     randomWord() {
       return Math.floor(Math.random() * words.length);
     },
 
     escape(word) {
-      return word.replace('ü', 'u').replace('ß', 's').replace('ä', 'a').replace('ö', 'o');
+      if (!word)
+        return 'bład';
+
+      return word
+        .replace('ü', 'u')
+        .replace('ß', 's')
+        .replace('ä', 'a')
+        .replace('ö', 'o');
     },
 
     next() {
       let old = this.active;
+      let word = words[this.active].slice();
 
       while (this.active == old)
         this.active = this.randomWord();
 
-      this.words.unshift({ word: words[this.active][0], answers: [], color: null });
+      this.words.unshift({
+        name: word.shift(),
+        answers: word,
+        user: [],
+      });
+
+      this.state = 0;
     },
 
-    show(correct) {
+    handleAnswer() {
+      this.show();
+    },
+
+    show() {
+      let correct = this.answer.trim().toLowerCase();
+      let correctWord = this.words[0].answers[this.state];
+
+      correct = correct == this.escape(correctWord);
+
+      this.words[0].user.push(this.answer.trim().toLowerCase());
+
+      correct && this.correctAnsw++;
       this.answer = '';
       this.round++;
+      this.state++;
 
-      let color;
-      if (correct) {
-        this.correctAnsw++;
-        color = '#2da';
-      } else
-        color = '#c22';
-
-      this.words[0].answers = words[this.active];
-      this.words[0].color = color;
-
-      this.percent = `${ Math.round(this.correctAnsw * 100 / this.round) }%`;
-      this.next();
+      if (this.state > 2) {
+        this.next();
+        return false;
+      }
     },
   },
 };
@@ -82,7 +103,12 @@ export default {
 
 <style lang='stylus'>
 
-@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext');
+@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext')
+@import "~flexstyl/index"
+
+.answer
+  @extend .flex, .around
+
 *
 	box-sizing border-box
 
@@ -132,7 +158,7 @@ body
 	padding 1em
 	font-size 2em
 	color #444
-#percent
+.right
 	right 0
 
 </style>
