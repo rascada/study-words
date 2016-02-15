@@ -34,7 +34,7 @@ export default [
   ['łapać, ujmować', 'greifen', 'griff', 'hat gegriffen'],
   ['mieć', 'haben', 'hatte', 'hat gehabt'],
   ['trzymać', 'halten', 'hielt', 'hat gehalten'],
-  ['podnosić', 'heben', 'hob', 'hat gehobem'],
+  ['podnosić', 'heben', 'hob', 'hat gehoben'],
   ['nazywać się', 'heißen', 'hieß', 'hat geheißen'],
   ['pomagać', 'helfen', 'half', 'hat geholfen'],
   ['znać', 'kennen', 'kannte', 'hat gekannt'],
