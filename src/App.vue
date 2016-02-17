@@ -113,6 +113,7 @@ export default {
       this.words[0].user.push(this.answer.trim().toLowerCase());
 
       correct && this.correctAnsw++;
+      console.log(this.answer);
       this.answer = '';
       this.round++;
       this.state++;
