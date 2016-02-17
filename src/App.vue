@@ -100,9 +100,8 @@ export default {
 
       if (this.state > 2) {
         Object.assign(localStorage, {
-          round: this.round,
-          state: this.state,
           correctAnsw: this.correctAnsw,
+          round: this.round,
         });
         this.next();
         return false;
