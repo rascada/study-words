@@ -85,11 +85,30 @@ export default {
       this.show();
     },
 
+    almostCorrect(answer, correct) {
+      let i = 0;
+      let undefinedLetters = 0;
+      let wrongLetters = 0;
+
+      for (var letter of answer) {
+        let correctLetter = correct[i++];
+
+        letter !== correctLetter && wrongLetters++;
+        typeof correctLetter === 'undefined' && undefinedLetters++;
+      }
+      return undefinedLetters === 1 || wrongLetters === 1;
+    },
+
     show() {
       let correct = this.answer.trim().toLowerCase();
       let correctWord = this.words[0].answers[this.state];
 
-      correct = correct == this.escape(correctWord);
+      correctWord = this.escape(correctWord);
+
+      if (this.almostCorrect(correct, correctWord))
+        if (!confirm(`Jesteś pewny że odpowiedź to ${correct}?`)) return false;
+
+      correct = correct == correctWord;
 
       this.words[0].user.push(this.answer.trim().toLowerCase());
 
