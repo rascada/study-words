@@ -44,6 +44,7 @@ export default {
   },
 
   ready() {
+    Object.assign(this, localStorage);
     this.active = this.randomWord();
     this.next();
   },
@@ -98,6 +99,11 @@ export default {
       this.state++;
 
       if (this.state > 2) {
+        Object.assign(localStorage, {
+          round: this.round,
+          state: this.state,
+          correctAnsw: this.correctAnsw,
+        });
         this.next();
         return false;
       }
