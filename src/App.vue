@@ -36,6 +36,7 @@ export default {
       active: null,
       state: 0,
       correctAnsw: 0,
+      strike: {},
     };
   },
 
@@ -85,6 +86,23 @@ export default {
       this.show();
     },
 
+    checkStrike(word) {
+      let strike = word.user.every((answer, i) => answer === this.escape(word.answers[i]));
+
+      if (strike && typeof this.strike[word.name] !== 'number')
+        this.strike[word.name] = 0;
+
+      if (strike)
+        this.strike[word.name]++;
+      else this.strike[word.name] = 0;
+
+      if (this.strike[word.name] > 5)
+        words.forEach(($word, i) => {
+          if ($word[0] === word.name)
+            words.splice(i, 1);
+        });
+    },
+
     almostCorrect(answer, correct) {
       let i = 0;
       let undefinedLetters = 0;
@@ -119,6 +137,7 @@ export default {
       this.state++;
 
       if (this.state > 2) {
+        this.checkStrike(this.words[0]);
         Object.assign(localStorage, {
           correctAnsw: this.correctAnsw,
           round: this.round,
