@@ -135,8 +135,7 @@ export default {
       this.answer = '';
       this.round++;
       this.state++;
-
-      if (this.state > 2) {
+      if (this.state >= this.words[0].answers.length) {
         this.checkStrike(this.words[0]);
         Object.assign(localStorage, {
           correctAnsw: this.correctAnsw,
