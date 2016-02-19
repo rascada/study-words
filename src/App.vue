@@ -23,8 +23,12 @@
 
 <script>
 
-import words from './words/second';
+import irregular from './words/irregular';
 import round from 'vue-round-filter';
+
+let words = {
+  irregular,
+};
 
 export default {
   data() {
@@ -35,6 +39,7 @@ export default {
       answer: '',
       active: null,
       state: 0,
+      selectedWord: 'irregular',
       correctAnsw: 0,
       strike: {},
     };
@@ -50,9 +55,15 @@ export default {
     this.next();
   },
 
+  computed: {
+    selectedWords() {
+      return words[this.selectedWord];
+    },
+  },
+
   methods: {
     randomWord() {
-      return Math.floor(Math.random() * words.length);
+      return Math.floor(Math.random() * this.selectedWords.length);
     },
 
     escape(word) {
@@ -68,7 +79,7 @@ export default {
 
     next() {
       let old = this.active;
-      let word = words[this.active].slice();
+      let word = this.selectedWords[this.active].slice();
 
       while (this.active == old)
         this.active = this.randomWord();
@@ -94,12 +105,13 @@ export default {
 
       if (strike)
         this.strike[word.name]++;
-      else this.strike[word.name] = 0;
+      else
+        this.strike[word.name] = 0;
 
       if (this.strike[word.name] > 5)
-        words.forEach(($word, i) => {
+        this.selectedWords.forEach(($word, i) => {
           if ($word[0] === word.name)
-            words.splice(i, 1);
+            this.selectedWords.splice(i, 1);
         });
     },
 
@@ -108,12 +120,13 @@ export default {
       let undefinedLetters = 0;
       let wrongLetters = 0;
 
-      for (var letter of answer) {
+      for (let letter of answer) {
         let correctLetter = correct[i++];
 
         letter !== correctLetter && wrongLetters++;
         typeof correctLetter === 'undefined' && undefinedLetters++;
       }
+
       return undefinedLetters === 1 || wrongLetters === 1;
     },
 
