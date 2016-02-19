@@ -3,6 +3,8 @@
 #screen
   h1.appName
     span Study words
+    select(v-model='selectedWord' v-on:change='next')
+      option(v-for='option in availableWords') {{ $key }}
     span {{ correctAnsw }}/{{ round }}
     span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
   #question
@@ -23,8 +25,14 @@
 
 <script>
 
-import words from './words/second';
+import irregular from './words/irregular';
+import regular from './words/third';
 import round from 'vue-round-filter';
+
+let words = {
+  irregular,
+  regular,
+};
 
 export default {
   data() {
@@ -35,6 +43,8 @@ export default {
       answer: '',
       active: null,
       state: 0,
+      availableWords: words,
+      selectedWord: 'irregular',
       correctAnsw: 0,
       strike: {},
     };
@@ -50,9 +60,15 @@ export default {
     this.next();
   },
 
+  computed: {
+    selectedWords() {
+      return words[this.selectedWord];
+    },
+  },
+
   methods: {
     randomWord() {
-      return Math.floor(Math.random() * words.length);
+      return Math.floor(Math.random() * this.selectedWords.length);
     },
 
     escape(word) {
@@ -68,7 +84,7 @@ export default {
 
     next() {
       let old = this.active;
-      let word = words[this.active].slice();
+      let word = this.selectedWords[this.active].slice();
 
       while (this.active == old)
         this.active = this.randomWord();
@@ -94,12 +110,13 @@ export default {
 
       if (strike)
         this.strike[word.name]++;
-      else this.strike[word.name] = 0;
+      else
+        this.strike[word.name] = 0;
 
       if (this.strike[word.name] > 5)
-        words.forEach(($word, i) => {
+        this.selectedWords.forEach(($word, i) => {
           if ($word[0] === word.name)
-            words.splice(i, 1);
+            this.selectedWords.splice(i, 1);
         });
     },
 
@@ -108,12 +125,13 @@ export default {
       let undefinedLetters = 0;
       let wrongLetters = 0;
 
-      for (var letter of answer) {
+      for (let letter of answer) {
         let correctLetter = correct[i++];
 
         letter !== correctLetter && wrongLetters++;
         typeof correctLetter === 'undefined' && undefinedLetters++;
       }
+
       return undefinedLetters === 1 || wrongLetters === 1;
     },
 
@@ -135,8 +153,7 @@ export default {
       this.answer = '';
       this.round++;
       this.state++;
-
-      if (this.state > 2) {
+      if (this.state >= this.words[0].answers.length) {
         this.checkStrike(this.words[0]);
         Object.assign(localStorage, {
           correctAnsw: this.correctAnsw,
@@ -202,6 +219,20 @@ body
         text-align center
         font-weight 600
         font-size 2em
+
+select
+  border 0
+  color #444
+  outline none
+  cursor pointer
+  font-weight 600
+  background #fff
+  border-radius .1em
+  box-shadow 0 .1em .2em rgba(#333, .7)
+
+  transition .3s
+  &:hover
+    background #eee
 
 input
   border 0
