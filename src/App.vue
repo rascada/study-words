@@ -3,7 +3,7 @@
 #screen
   h1.appName
     span Study words
-    select(v-model='selectedWord')
+    select(v-model='selectedWord' v-on:change='next')
       option(v-for='option in availableWords') {{ $key }}
     span {{ correctAnsw }}/{{ round }}
     span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
