@@ -3,7 +3,7 @@
 #screen
   h1.appName
     span Study words
-    select(v-model='selectedWord' v-on:change='next')
+    select(v-model='selectedWord' v-on:change='next(true)')
       option(v-for='option in availableWords') {{ $key }}
     span {{ correctAnsw }}/{{ round }}
     span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
@@ -19,7 +19,7 @@
             )
             {{ answer }}
         span(v-else) {{ word.name }}
-  input(v-model='answer' @keydown.enter='handleAnswer')
+  input(v-model='answer' @keydown.enter='show')
 
 </template>
 
@@ -82,24 +82,30 @@ export default {
         .replace('ö', 'o');
     },
 
-    next() {
-      let old = this.active;
-      let word = this.selectedWords[this.active].slice();
-
-      while (this.active == old)
-        this.active = this.randomWord();
-
-      this.words.unshift({
+    prepareWord(word) {
+      return {
         name: word.shift(),
         answers: word,
         user: [],
-      });
-
-      this.state = 0;
+      };
     },
 
-    handleAnswer() {
-      this.show();
+    next(newGroup) {
+      if (newGroup) {
+        let word = this.selectedWords[this.active = this.randomWord()];
+
+        this.words.$set(0, this.prepareWord(word));
+      } else {
+        let old = this.active;
+        let word = this.selectedWords[this.active].slice();
+
+        while (this.active == old)
+          this.active = this.randomWord();
+
+        this.words.unshift(this.prepareWord(word));
+      }
+
+      this.state = 0;
     },
 
     checkStrike(word) {
