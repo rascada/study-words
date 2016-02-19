@@ -220,6 +220,20 @@ body
         font-weight 600
         font-size 2em
 
+select
+  border 0
+  color #444
+  outline none
+  cursor pointer
+  font-weight 600
+  background #fff
+  border-radius .1em
+  box-shadow 0 .1em .2em rgba(#333, .7)
+
+  transition .3s
+  &:hover
+    background #eee
+
 input
   border 0
   height 2.25em
