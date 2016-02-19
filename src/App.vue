@@ -26,10 +26,12 @@
 <script>
 
 import irregular from './words/irregular';
+import regular from './words/third';
 import round from 'vue-round-filter';
 
 let words = {
   irregular,
+  regular,
 };
 
 export default {
