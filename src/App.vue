@@ -3,6 +3,8 @@
 #screen
   h1.appName
     span Study words
+    select(v-model='selectedWord')
+      option(v-for='option in availableWords') {{ $key }}
     span {{ correctAnsw }}/{{ round }}
     span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
   #question
@@ -39,6 +41,7 @@ export default {
       answer: '',
       active: null,
       state: 0,
+      availableWords: words,
       selectedWord: 'irregular',
       correctAnsw: 0,
       strike: {},
