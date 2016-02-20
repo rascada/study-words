@@ -121,33 +121,40 @@ export default {
       return undefinedLetters === 1 || wrongLetters === 1;
     },
 
+    checkWord(word) {
+      if (this.state >= word.answers.length) {
+        this.checkStrike(word);
+        this.next();
+
+        Object.assign(localStorage, {
+          correctAnsw: this.correctAnsw,
+          round: this.round,
+        });
+
+        return false;
+      }
+    },
+
     show() {
+      let word = this.words[0];
       let answer = this.answer.trim().toLowerCase();
-      let correct = this.escape(this.words[0].answers[this.state]);
+      let correct = this.escape(word.answers[this.state]);
       let isCorrect = correct === answer;
 
       if (this.almostCorrect(answer, correct))
         if (!confirm(`Jesteś pewny że odpowiedź to ${answer}?`))
           return false;
 
-      this.words[0].user.push(answer);
-
-      console.log(this.answer);
+      word.user.push(answer);
+      console.log(answer);
       this.answer = '';
 
       this.round++;
       this.state++;
-      isCorrect && this.correctAnsw++;
+      isCorrect
+        && this.correctAnsw++;
 
-      if (this.state >= this.words[0].answers.length) {
-        this.checkStrike(this.words[0]);
-        Object.assign(localStorage, {
-          correctAnsw: this.correctAnsw,
-          round: this.round,
-        });
-        this.next();
-        return false;
-      }
+      return this.checkWord(word);
     },
   },
 };
