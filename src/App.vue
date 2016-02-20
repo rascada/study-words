@@ -1,28 +1,5 @@
-<template lang='jade'>
-
-#screen
-  h1.appName
-    span Study words
-    select(v-model='selectedWord' v-on:change='next(true)')
-      option(v-for='option in availableWords') {{ $key }}
-    span {{ correctAnsw }}/{{ round }}
-    span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
-  #question
-    ul
-      li(v-for='word in words')
-        .answer(v-show='word.user.length')
-          span {{ word.name }}
-          span(
-            v-for='answer in word.answers'
-            v-show='word.user.length > $index'
-            v-bind:style="{ color: escape(answer) == word.user[$index] ? '#2da' : '#c22' }"
-            )
-            {{ answer }}
-        span(v-else) {{ word.name }}
-  input(v-model='answer' placeholder='odpowiedź' @keydown.enter='show')
-
-</template>
-
+<style src='./index.styl' lang='stylus'></style>
+<template src='./index.jade' lang='jade'></template>
 <script>
 
 import irregular from './words/irregular';
@@ -83,11 +60,14 @@ export default {
     },
 
     prepareWord(word) {
-      return {
+      let ob = {
         name: word.shift(),
         answers: word,
         user: [],
       };
+
+      console.log(ob)
+      return ob;
     },
 
     next(newGroup) {
@@ -173,85 +153,3 @@ export default {
 };
 
 </script>
-
-<style lang='stylus'>
-
-@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext')
-@import "~flexstyl/index"
-
-.answer
-  @extend .flex, .around
-
-*
-  box-sizing border-box
-
-.appName
-  display flex
-  justify-content space-between
-  background #2da
-  padding .25em
-  color #fff
-  margin 0
-
-body
-  font-family Kelly Slab
-  background #fafafa
-  margin 0
-  height 100vh
-  display flex
-  flex-flow column
-  align-items center
-  justify-content center
-
-#screen
-  background #fff
-  width 50em
-  display flex
-  flex-flow column
-  box-shadow 0 .25em .3em rgba(0,0,0,.25)
-
-#question
-  padding .75em 2em
-  ul
-    list-style-type none
-    padding 0
-    overflow-y scroll
-    max-height 55vh
-    padding .5em 0
-
-    & li
-      padding .5em .25em
-      &:first-child
-        text-align center
-        font-weight 600
-        font-size 2em
-
-select
-  border 0
-  color #444
-  outline none
-  cursor pointer
-  font-weight 600
-  background #fff
-  border-radius .1em
-  box-shadow 0 .1em .2em rgba(#333, .7)
-
-  transition .3s
-  &:hover
-    background #eee
-
-input
-  border 0
-  outline none
-  height 2.25em
-  background #2da
-  padding .2em .1em
-  text-align center
-  color #efefef
-  font-size 1.2em
-
-  &::placeholder
-    color #2da - 20%
-    font-family Kelly Slab
-
-</style>
