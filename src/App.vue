@@ -14,16 +14,16 @@ let words = {
 export default {
   data() {
     return {
+      state: 0,
       round: 0,
       words: [],
+      strike: {},
       percent: 0,
       answer: '',
       active: null,
-      state: 0,
+      correctAnsw: 0,
       availableWords: words,
       selectedWord: 'irregular',
-      correctAnsw: 0,
-      strike: {},
     };
   },
 
@@ -122,23 +122,23 @@ export default {
     },
 
     show() {
-      let correct = this.answer.trim().toLowerCase();
-      let correctWord = this.words[0].answers[this.state];
+      let answer = this.answer.trim().toLowerCase();
+      let correct = this.escape(this.words[0].answers[this.state]);
+      let isCorrect = correct === answer;
 
-      correctWord = this.escape(correctWord);
+      if (this.almostCorrect(answer, correct))
+        if (!confirm(`Jesteś pewny że odpowiedź to ${answer}?`))
+          return false;
 
-      if (this.almostCorrect(correct, correctWord))
-        if (!confirm(`Jesteś pewny że odpowiedź to ${correct}?`)) return false;
+      this.words[0].user.push(answer);
 
-      correct = correct == correctWord;
-
-      this.words[0].user.push(this.answer.trim().toLowerCase());
-
-      correct && this.correctAnsw++;
       console.log(this.answer);
       this.answer = '';
+
       this.round++;
       this.state++;
+      isCorrect && this.correctAnsw++;
+
       if (this.state >= this.words[0].answers.length) {
         this.checkStrike(this.words[0]);
         Object.assign(localStorage, {
