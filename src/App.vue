@@ -14,16 +14,16 @@ let words = {
 export default {
   data() {
     return {
+      state: 0,
       round: 0,
       words: [],
+      strike: {},
       percent: 0,
       answer: '',
       active: null,
-      state: 0,
+      correctAnsw: 0,
       availableWords: words,
       selectedWord: 'irregular',
-      correctAnsw: 0,
-      strike: {},
     };
   },
 
@@ -121,33 +121,40 @@ export default {
       return undefinedLetters === 1 || wrongLetters === 1;
     },
 
-    show() {
-      let correct = this.answer.trim().toLowerCase();
-      let correctWord = this.words[0].answers[this.state];
+    checkWord(word) {
+      if (this.state >= word.answers.length) {
+        this.checkStrike(word);
+        this.next();
 
-      correctWord = this.escape(correctWord);
-
-      if (this.almostCorrect(correct, correctWord))
-        if (!confirm(`Jesteś pewny że odpowiedź to ${correct}?`)) return false;
-
-      correct = correct == correctWord;
-
-      this.words[0].user.push(this.answer.trim().toLowerCase());
-
-      correct && this.correctAnsw++;
-      console.log(this.answer);
-      this.answer = '';
-      this.round++;
-      this.state++;
-      if (this.state >= this.words[0].answers.length) {
-        this.checkStrike(this.words[0]);
         Object.assign(localStorage, {
           correctAnsw: this.correctAnsw,
           round: this.round,
         });
-        this.next();
+
         return false;
       }
+    },
+
+    show() {
+      let word = this.words[0];
+      let answer = this.answer.trim().toLowerCase();
+      let correct = this.escape(word.answers[this.state]);
+      let isCorrect = correct === answer;
+
+      if (this.almostCorrect(answer, correct))
+        if (!confirm(`Jesteś pewny że odpowiedź to ${answer}?`))
+          return false;
+
+      word.user.push(answer);
+      console.log(answer);
+      this.answer = '';
+
+      this.round++;
+      this.state++;
+      isCorrect
+        && this.correctAnsw++;
+
+      return this.checkWord(word);
     },
   },
 };
