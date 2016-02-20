@@ -19,7 +19,7 @@
             )
             {{ answer }}
         span(v-else) {{ word.name }}
-  input(v-model='answer' @keydown.enter='show')
+  input(v-model='answer' placeholder='odpowiedź' @keydown.enter='show')
 
 </template>
 
@@ -242,13 +242,16 @@ select
 
 input
   border 0
+  outline none
   height 2.25em
   background #2da
   padding .2em .1em
   text-align center
   color #efefef
   font-size 1.2em
-  &:focus
-    outline none
+
+  &::placeholder
+    color #2da - 20%
+    font-family Kelly Slab
 
 </style>
