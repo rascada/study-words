@@ -4,10 +4,6 @@
 
 import round from 'vue-round-filter';
 
-import wordsCreator from './wordsCreator';
-import wordsList from './wordsList';
-import auth from './auth';
-
 export default {
   data() {
     return {
@@ -20,14 +16,8 @@ export default {
       answer: '',
       active: null,
       correctAnsw: 0,
-      selectedWords: [],
+      selectedWords: {},
     };
-  },
-
-  components: {
-    auth,
-    wordsCreator,
-    wordsList,
   },
 
   filters: {
@@ -35,14 +25,12 @@ export default {
   },
 
   ready() {
-    Object.assign(this, localStorage);
-  },
-
-  events: {
-    changeWords(words) {
-      this.selectedWords = Object.assign({}, words);
+    this.$dispatch('emit', 'words', this.$route.params.words);
+    this.$root.socket.on('words', words => {
+      this.selectedWords = words;
       this.next(true);
-    },
+    });
+    Object.assign(this, localStorage);
   },
 
   methods: {
