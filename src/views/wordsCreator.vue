@@ -22,7 +22,7 @@ export default {
 
   methods: {
     send() {
-      this.$parent.socket.emit('newWords', {
+      this.$dispatch('emit', 'newWords', {
         name: this.name,
         words: this.words.concat(),
       });
