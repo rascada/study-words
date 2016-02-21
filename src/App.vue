@@ -2,14 +2,12 @@
 <template src='./index.jade' lang='jade'></template>
 <script>
 
-import irregular from './words/irregular';
-import regular from './words/third';
+import io from 'socket.io-client';
 import round from 'vue-round-filter';
 
-let words = {
-  irregular,
-  regular,
-};
+import wordsCreator from './wordsCreator';
+import wordsList from './wordsList';
+import auth from './auth';
 
 export default {
   data() {
@@ -22,9 +20,15 @@ export default {
       answer: '',
       active: null,
       correctAnsw: 0,
-      availableWords: words,
-      selectedWord: 'irregular',
+      socket: io('localhost:4040'),
+      selectedWords: [],
     };
+  },
+
+  components: {
+    auth,
+    wordsCreator,
+    wordsList,
   },
 
   filters: {
@@ -33,19 +37,18 @@ export default {
 
   ready() {
     Object.assign(this, localStorage);
-    this.active = this.randomWord();
-    this.next();
   },
 
-  computed: {
-    selectedWords() {
-      return words[this.selectedWord];
+  events: {
+    changeWords(words) {
+      this.selectedWords = Object.assign({}, words);
+      this.next(true);
     },
   },
 
   methods: {
     randomWord() {
-      return Math.floor(Math.random() * this.selectedWords.length);
+      return Math.floor(Math.random() * this.selectedWords.words.length);
     },
 
     escape(word) {
@@ -59,25 +62,26 @@ export default {
         .replace('ö', 'o');
     },
 
-    prepareWord(word) {
+    prepareWord(words) {
+      words = words.concat();
+
       let ob = {
-        name: word.shift(),
-        answers: word,
+        name: words.shift(),
+        answers: words,
         user: [],
       };
 
-      console.log(ob)
       return ob;
     },
 
     next(newGroup) {
       if (newGroup) {
-        let word = this.selectedWords[this.active = this.randomWord()];
+        let word = this.selectedWords.words[this.active = this.randomWord()];
 
         this.words.$set(0, this.prepareWord(word));
       } else {
         let old = this.active;
-        let word = this.selectedWords[this.active].slice();
+        let word = this.selectedWords.words[this.active].slice();
 
         while (this.active == old)
           this.active = this.randomWord();
