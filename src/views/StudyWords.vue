@@ -70,7 +70,7 @@ export default {
         let old = this.active;
         let word = this.selectedWords.words[this.active].slice();
 
-        while (this.active == old)
+        while (this.active == old && this.selectedWords.words.length > 1)
           this.active = this.randomWord();
 
         this.words.unshift(this.prepareWord(word));
