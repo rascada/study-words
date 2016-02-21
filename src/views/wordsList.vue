@@ -41,15 +41,28 @@ export default {
 </script>
 
 <style lang='stylus'>
+@import '~flexstyl/flex'
 .wordsList
   ul
     list-style-type none
     padding 0
 
     li
-      cursor pointer
-      margin .25em
-      padding .5em
-      background teal
-      color #fff
+      flex styl
+      align stretch
+      margin .5em 0
+
+      span, button
+        font-weight bold
+        cursor pointer
+        padding .5em
+        color #fff
+
+      span
+        background #2da
+
+      button
+        border 0
+        outline none
+        background indianred
 </style>
