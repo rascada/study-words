@@ -1,7 +1,9 @@
 <template lang='jade'>
 .wordsList
   ul
-    li(v-for='words in wordsList' @click='active = $index') {{ words.name }}
+    li(v-for='words in wordsList')
+      span(@click='active = $index') {{ words.name }}
+      button(@click='remove(words)') x
 </template>
 
 <script>
@@ -19,9 +21,18 @@ export default {
     },
   },
 
+  methods: {
+    remove(words) {
+      this.$parent.socket.emit('deleteWordsList', words._id);
+    },
+  },
+
   ready() {
     this.$parent.socket.emit('wordsList');
     this.$parent.socket.on('wordsList', wordsList => this.wordsList = wordsList);
+    this.$parent.socket.on('removedWordsList', id =>
+      this.wordsList = this.wordsList.filter(words => words._id !== id)
+    );
   },
 };
 
