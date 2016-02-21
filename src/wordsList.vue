@@ -33,6 +33,7 @@ export default {
     this.$parent.socket.on('removedWordsList', id =>
       this.wordsList = this.wordsList.filter(words => words._id !== id)
     );
+    this.$parent.socket.on('newWords', words => this.wordsList.push(words));
   },
 };
 
