@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.jade",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --hot --config build/webpack.dev.conf.js --progress --port 4041",
     "build": "rimraf dist && webpack --progress --hide-modules --config build/webpack.prod.conf.js",
     "test": "karma start build/karma.conf.js --single-run"
   },
@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/rascada/study-words#readme",
   "dependencies": {
-    "flexstyl": "0.0.4",
+    "flexstyl": "^1.0.1",
+    "socket.io-client": "^1.4.5",
     "stylus-loader": "^1.5.1",
     "vue": "^1.0.0",
-    "vue-round-filter": "^1.1.2"
+    "vue-round-filter": "^1.1.2",
+    "vue-router": "^0.7.11"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
