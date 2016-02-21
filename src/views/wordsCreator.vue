@@ -27,6 +27,8 @@ export default {
         name: this.name,
         words: this.words.concat(),
       });
+
+      this.$router.go('/');
     },
   },
 };
