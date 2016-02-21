@@ -23,17 +23,21 @@ export default {
 
   methods: {
     remove(words) {
-      this.$parent.socket.emit('deleteWordsList', words._id);
+      this.$dispatch('emit', 'deleteWordsList', words._id);
+    },
+
+    socket(socket) {
+      socket.on('newWords', words => this.wordsList.push(words));
+      socket.on('wordsList', wordsList => this.wordsList = wordsList);
+      socket.on('removedWordsList', id =>
+        this.wordsList = this.wordsList.filter(words => words._id !== id)
+      );
     },
   },
 
   ready() {
-    this.$parent.socket.emit('wordsList');
-    this.$parent.socket.on('wordsList', wordsList => this.wordsList = wordsList);
-    this.$parent.socket.on('removedWordsList', id =>
-      this.wordsList = this.wordsList.filter(words => words._id !== id)
-    );
-    this.$parent.socket.on('newWords', words => this.wordsList.push(words));
+    this.socket(this.$root.socket);
+    this.$dispatch('emit', 'wordsList');
   },
 };
 
