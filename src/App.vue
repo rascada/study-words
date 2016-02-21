@@ -1,17 +1,25 @@
 <template lang="jade">
 .studyWords
-  h1 siema
-  router-view
+  nav
+    h1 słówka
+    auth
+  main
+    router-view
 </template>
 
 <script>
 import io from 'socket.io-client';
+import auth from './auth';
 
 export default {
   data() {
     return {
       socket: io('localhost:4040'),
     };
+  },
+
+  components: {
+    auth,
   },
 
   ready() {
@@ -34,10 +42,23 @@ export default {
 body
   font-family Kelly Slab
   background #fafafa
-  margin 0
   height 100vh
-  display flex
-  flex-flow column
-  align-items center
-  justify-content center
+  margin 0
+
+.studyWords
+  height 100%
+  flex styl
+  flex column
+
+  nav
+    flex styl
+    color #fff
+    align center
+    justify around
+    background #2da
+
+  main
+    flex styl
+    flex-grow 1
+    flex center
 </style>

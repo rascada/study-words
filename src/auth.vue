@@ -86,7 +86,6 @@ export default {
   ready() {
     this.$parent.socket.on('authError', err => this.error = err);
     this.$parent.socket.on('user', user => {
-      this.$parent.user = user;
       this.authName = user.name;
       ['error', 'username', 'password']
         .forEach(prop => this[prop] = null);
