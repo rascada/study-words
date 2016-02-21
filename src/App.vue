@@ -14,7 +14,7 @@ import auth from './auth';
 export default {
   data() {
     return {
-      socket: io('localhost:4040'),
+      socket: io('onnexus.ddns.net:4040'),
     };
   },
 
