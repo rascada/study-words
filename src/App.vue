@@ -26,3 +26,18 @@ export default {
 };
 
 </script>
+
+<style lang='stylus'>
+@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext')
+@import "~flexstyl/flex"
+
+body
+  font-family Kelly Slab
+  background #fafafa
+  margin 0
+  height 100vh
+  display flex
+  flex-flow column
+  align-items center
+  justify-content center
+</style>
