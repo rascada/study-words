@@ -30,3 +30,8 @@
     </script>
   </div>
 </template>
+
+<style lang='stylus'>
+#div-gpt-ad-1456170299072-0
+  flex-shrink 0
+</style>
