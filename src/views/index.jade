@@ -16,7 +16,7 @@
             v-show='word.user.length > $index'
             v-bind:style="{ color: escape(answer) == word.user[$index] ? '#2da' : '#c22' }"
             ) 
-            {{ answer }}
+            {{ answer }} {{ answer !== word.user[$index] ? '|| ' + word.user[$index] : '' }}
 
         span(v-else) {{ word.name }}
 
