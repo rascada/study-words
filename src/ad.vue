@@ -22,7 +22,7 @@
       googletag.companionAds().setRefreshUnfilledSlots(true);
       googletag.enableServices();
     });
-  </scrip>
+  </script>
 
   <div id='div-gpt-ad-1456170299072-0' style='height:768px; width:1024px;'>
     <script type='text/javascript'>
