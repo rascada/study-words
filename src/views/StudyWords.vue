@@ -132,6 +132,8 @@ export default {
       let correct = this.escape(word.answers[this.state]);
       let isCorrect = correct === answer;
 
+      if (!answer) return;
+
       if (this.almostCorrect(answer, correct))
         if (!confirm(`Jesteś pewny że odpowiedź to ${answer}?`))
           return false;
