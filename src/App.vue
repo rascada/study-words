@@ -1,16 +1,22 @@
 <template lang="jade">
+
 .studyWords
   nav
     h1(v-link="{ path: '/' }") słówka
     button(v-link="{ path: 'nowy' }") Dodaj nowe
     auth
+
+  ad
+
   main
     router-view
+
 </template>
 
 <script>
 import io from 'socket.io-client';
 import auth from './auth';
+import ad from './ad';
 
 export default {
   data() {
@@ -21,6 +27,7 @@ export default {
 
   components: {
     auth,
+    ad,
   },
 
   ready() {
