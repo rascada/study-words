@@ -6,8 +6,7 @@
     button(v-link="{ path: 'nowy' }") Dodaj nowe
     auth
 
-  script(type='text/javascript' src='https://www.googletagservices.com/tag/js/gpt.js').
-    googletag.pubads().definePassback('/21882922/slowka', [[468, 60], [970, 90], [336, 280], [728, 90]]).display();
+  ad
 
   main
     router-view

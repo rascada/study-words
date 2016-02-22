@@ -16,19 +16,18 @@
 
   <script type='text/javascript'>
     googletag.cmd.push(function() {
-      googletag.defineSlot('/21882922/slowka', [1024, 768], 'div-gpt-ad-1456170299072-0').addService(googletag.companionAds()).addService(googletag.pubads());
+      googletag.defineSlot('/21882922/slowka', [[468, 60], [970, 90], [728, 90], [336, 280]], 'div-gpt-ad-1456177567756-0').addService(googletag.pubads());
       googletag.pubads().enableSingleRequest();
-      googletag.pubads().enableVideoAds();
-      googletag.companionAds().setRefreshUnfilledSlots(true);
       googletag.enableServices();
     });
   </script>
 
-  <div id='div-gpt-ad-1456170299072-0' style='height:768px; width:1024px;'>
+  <div id='div-gpt-ad-1456177567756-0'>
     <script type='text/javascript'>
-    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1456170299072-0'); });
+      googletag.cmd.push(function() { googletag.display('div-gpt-ad-1456177567756-0'); });
     </script>
   </div>
+
 </template>
 
 <style lang='stylus'>
