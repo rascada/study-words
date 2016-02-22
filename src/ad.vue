@@ -22,5 +22,11 @@
       googletag.companionAds().setRefreshUnfilledSlots(true);
       googletag.enableServices();
     });
-  </script>
+  </scrip>
+
+  <div id='div-gpt-ad-1456170299072-0' style='height:768px; width:1024px;'>
+    <script type='text/javascript'>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1456170299072-0'); });
+    </script>
+  </div>
 </template>
