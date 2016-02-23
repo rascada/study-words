@@ -27,6 +27,11 @@ export default {
   ready() {
     this.$dispatch('emit', 'words', this.$route.params.words);
     this.$root.socket.on('words', words => {
+      if (!words) {
+        this.$router.go('/nowy');
+        return false;
+      }
+
       this.selectedWords = words;
       this.next(true);
     });
