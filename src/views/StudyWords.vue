@@ -33,7 +33,7 @@ export default {
       }
 
       this.selectedWords = words;
-      this.next(true);
+      this.next();
     });
     Object.assign(this, localStorage);
   },
@@ -66,21 +66,21 @@ export default {
       return ob;
     },
 
-    next(newGroup) {
-      if (newGroup) {
-        let word = this.selectedWords.words[this.active = this.randomWord()];
+    drawUntilNew() {
+      let old = this.active;
+      let isDrawable = this.selectedWords.words.length > 1;
 
-        this.words.$set(0, this.prepareWord(word));
-      } else {
-        let old = this.active;
-        let word = this.selectedWords.words[this.active].slice();
+      if (isDrawable) while (this.active === old)
+        this.active = this.randomWord();
+      else this.active = 0;
+    },
 
-        while (this.active == old && this.selectedWords.words.length > 1)
-          this.active = this.randomWord();
+    next() {
+      this.drawUntilNew();
 
-        this.words.unshift(this.prepareWord(word));
-      }
+      let word = this.selectedWords.words[this.active].slice();
 
+      this.words.unshift(this.prepareWord(word));
       this.state = 0;
     },
 
