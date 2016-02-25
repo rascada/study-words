@@ -6,6 +6,7 @@
       span {{ $index + 1 }}
       input(v-for='wordForm in word' track-by="$index" v-model='wordForm')
       button(@click="word.push('')") +
+      button(@click="word.pop()") -
       button(class='remove' @click="words.splice($index, 1)") x
   div
     button(@click="words.push(['', ''])") dodaj słówko
@@ -83,6 +84,7 @@ export default {
 
   button
     border 0
+    outline none
     cursor pointer
     margin 0 .5em
     font-weight bold
