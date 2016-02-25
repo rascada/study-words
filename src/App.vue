@@ -47,8 +47,10 @@ export default {
 @import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext')
 @import "~flexstyl/flex"
 
-body
+*
   font-family Kelly Slab
+
+body
   background #fafafa
   height 100vh
   margin 0
@@ -77,7 +79,6 @@ body
 
   input::placeholder
     color #2da - 20%
-    font-family Kelly Slab
 
   nav
     flex styl
