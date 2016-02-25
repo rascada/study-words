@@ -47,11 +47,15 @@ export default {
       if (!word)
         return 'bład';
 
-      return word
-        .replace('ü', 'u')
-        .replace('ß', 's')
-        .replace('ä', 'a')
-        .replace('ö', 'o');
+      const illegalSigns = {
+        'ä': 'a',
+        'ö': 'o',
+        'ü': 'u',
+        'ß': 's',
+      };
+
+      return word.replace(/[öäüÖÄÜß ]/g,
+        match => illegalSigns[match]);
     },
 
     prepareWord(words) {
