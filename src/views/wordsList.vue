@@ -59,7 +59,9 @@ export default {
         color #fff
 
       span
+        flex grow
         background #2da
+        text-align center
 
       button
         border 0
