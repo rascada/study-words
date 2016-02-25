@@ -70,6 +70,11 @@ export default {
       return ob;
     },
 
+    resetScore() {
+      ['correctAnsw', 'round']
+        .forEach(val => this[val] = 0);
+    },
+
     drawUntilNew() {
       let old = this.active;
       let isDrawable = this.selectedWords.words.length > 1;

@@ -4,6 +4,8 @@
 
     span {{ correctAnsw }}/{{ round }}
     span {{ (correctAnsw * 100) / round || 0 | round 2 }}%
+    
+    button(@click='resetScore') reset
 
   #question
     ul
