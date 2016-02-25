@@ -58,6 +58,11 @@ body
   flex styl
   flex column
 
+
+  input::placeholder
+    color #2da - 20%
+    font-family Kelly Slab
+
   nav
     flex styl
     color #fff
