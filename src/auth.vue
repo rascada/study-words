@@ -12,12 +12,18 @@
   button
     border 0
     background #fff
+    color #2da
     cursor pointer
     padding .5em .75em
     margin .25em
 
   input
     border .1em solid transparent
+    margin .25em
+    outline none
+    padding .5em
+    border-radius .2em
+    box-shadow 0 .1em .2em rgba(#000, .25)
 
   .error
     color red
