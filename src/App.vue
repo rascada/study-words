@@ -6,7 +6,7 @@
     button(v-link="{ path: 'nowy' }") Dodaj nowe
     auth
 
-  ad
+  //ad
 
   main
     router-view
