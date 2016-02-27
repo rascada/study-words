@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --config build/webpack.dev.conf.js --progress --port 4041",
     "build": "rimraf dist && webpack --progress --hide-modules --config build/webpack.prod.conf.js",
-    "test": "karma start build/karma.conf.js --single-run"
+    "test": "karma start build/karma.conf.js --single-run",
+    "prod": "sudo git pull && sudo npm run build"
   },
   "repository": {
     "type": "git",
