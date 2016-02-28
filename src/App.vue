@@ -1,4 +1,5 @@
 <template lang="jade">
+link(href='https://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext' rel='stylesheet' type='text/css')
 
 .studyWords
   nav
@@ -44,7 +45,6 @@ export default {
 </script>
 
 <style lang='stylus'>
-@import url('http://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext')
 @import "~flexstyl/flex"
 
 *
