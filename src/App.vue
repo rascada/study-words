@@ -22,7 +22,7 @@ import ad from './ad';
 export default {
   data() {
     return {
-      socket: io('http://onnexus.ddns.net:4040'),
+      socket: io('https://server.slowka.xyz', { path: '/' }),
     };
   },
 
