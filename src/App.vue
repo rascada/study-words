@@ -1,7 +1,7 @@
 <template lang="jade">
-link(href='https://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext' rel='stylesheet' type='text/css')
 
 .studyWords
+  link(href='https://fonts.googleapis.com/css?family=Kelly+Slab&subset=latin,latin-ext' rel='stylesheet' type='text/css')
   nav
     h1(v-link="{ path: '/' }") słówka
     button(v-link="{ path: 'nowy' }") Dodaj nowe
