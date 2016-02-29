@@ -3,7 +3,7 @@
   ul
     li(v-for='words in wordsList')
       span(@click='go(words)') {{ words.name }}
-      button(@click='remove(words)') x
+      button(v-show="words.access" @click='remove(words)') x
 </template>
 
 <script>
