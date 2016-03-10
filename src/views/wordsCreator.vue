@@ -14,12 +14,19 @@
 </template>
 
 <script>
+import words from './words-loader';
+
 export default {
+
   data() {
     return {
       name: '',
       words: [['', '']],
     };
+  },
+
+  ready() {
+    words(this, words => Object.assign(this, words));
   },
 
   methods: {

@@ -17,6 +17,11 @@ export default function(router) {
         require(['./views/wordsCreator'], resolve);
       },
     },
+    '/edytuj/:words': {
+      component(resolve) {
+        require(['./views/wordsCreator'], resolve);
+      },
+    },
   });
 
   return router;

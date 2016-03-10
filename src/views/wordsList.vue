@@ -3,7 +3,8 @@
   ul
     li(v-for='words in wordsList')
       span(@click='go(words)') {{ words.name }}
-      button(v-show="words.access" @click='remove(words)') x
+      button.edit(v-show="words.access" @click='edit(words)') #
+      button.remove(v-show="words.access" @click='remove(words)') x
 </template>
 
 <script>
@@ -17,6 +18,10 @@ export default {
   methods: {
     go(words) {
       this.$router.go(words.name);
+    },
+
+    edit(words) {
+      this.$router.go(`edytuj/${words.name}`);
     },
 
     remove(words) {
@@ -66,5 +71,10 @@ export default {
       button
         border 0
         outline none
+
+      .edit
+        background #ffc107
+
+      .remove
         background indianred
 </style>
