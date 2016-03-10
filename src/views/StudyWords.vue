@@ -3,6 +3,7 @@
 <script>
 
 import round from 'vue-round-filter';
+import words from './words-loader';
 
 export default {
   data() {
@@ -25,16 +26,8 @@ export default {
   },
 
   ready() {
-    this.$dispatch('emit', 'words', this.$route.params.words);
-    this.$root.socket.on('words', words => {
-      if (!words) {
-        this.$router.go('/nowy');
-        return false;
-      }
+    words(this, ::this.next);
 
-      this.selectedWords = words;
-      this.next();
-    });
     Object.assign(this, localStorage);
   },
 
@@ -84,7 +77,9 @@ export default {
       else this.active = 0;
     },
 
-    next() {
+    next(words) {
+      if (words) this.selectedWords = words;
+
       this.drawUntilNew();
 
       let word = this.selectedWords.words[this.active].slice();
